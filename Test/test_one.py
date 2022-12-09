@@ -60,9 +60,19 @@ MEMBER_SCHEMA = {
     "required": ["status", "data"]
 }
 
+
+def check_header(res):
+    new_dict = {}
+    for k, v in res.headers.items():
+        if k == 'Content-Type':
+            new_dict.update({k: v})
+
+    assert {'Content-Type': 'application/json; charset=UTF-8'} == new_dict, "Wrong header"
+
 def test_one():
     res = requests.get(url='http://demo8955896.mockable.io/members')
     assert res.status_code == 200, "Wrong status code"
+    check_header(res)
     validate(instance=res.json(), schema=SCHEMA)
 
 def test_two():
@@ -70,4 +80,5 @@ def test_two():
     member_id = res.json()["data"]["members"][0]["ID"]
     res = requests.get(url=f'https://demo8955896.mockable.io/member/{member_id}', verify=False)
     assert res.status_code == 200, "Wrong code"
+    check_header(res)
     validate(instance=res.json(), schema=MEMBER_SCHEMA)
