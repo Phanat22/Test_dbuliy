@@ -1,6 +1,7 @@
-.idea/
+.DS_Store
+.idea
 venv/
-Test/.pytest_cache/
+.pytest_cache/
 .env
 pytest.ini
 *.pyc
