@@ -8,3 +8,4 @@
 
  * pytest -v tests/test_homepage.py
  * pytest -v tests/test_homepage.py -k test_nav_links
+ * pytest -v tests/test_aviasales.py
