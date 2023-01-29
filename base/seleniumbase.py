@@ -1,3 +1,4 @@
+import time
 
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
@@ -61,3 +62,8 @@ class SeleniumBase:
     def delete_cookie(self, cookie_name: str) -> None:
         '''Delete a cookie by a name'''
         self.driver.delete_cookie(cookie_name)
+
+    def scroll_down(self):
+        '''Scroll down'''
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)
