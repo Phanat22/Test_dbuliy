@@ -9,10 +9,10 @@ from typing import List
 
 
 class SeleniumBase:
-    def __init__(self, driver):
+    def __init__(self, driver, timeout=10):
         self.driver = driver
         self.__wait = WebDriverWait(driver, 15, 0.3, ignored_exceptions=StaleElementReferenceException)
-        self.url = 'https://www.macys.com/'
+        self.driver.implicitly_wait(timeout)
 
     def __get_selenium_by(self, find_by: str) -> dict:
         '''Return a dictionary, where Keys are Strings representing a search locator strategies and Values are related By class values'''

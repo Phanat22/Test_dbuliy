@@ -6,6 +6,11 @@ from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriv
 from abstract.selenium_listener import MyListener
 
 
+def pytest_addoption(parser):
+    parser.addoption('--browser_name', action='store', default='chrome',
+                     help="Choose browser: chrome or firefox")
+
+
 @pytest.fixture
 def get_chrome_options():
     options = chrome_options()
@@ -16,9 +21,12 @@ def get_chrome_options():
 
 
 @pytest.fixture
-def get_webdriver(get_chrome_options):
-    options = get_chrome_options
-    driver = webdriver.Chrome(options=options)
+def get_webdriver(request, get_chrome_options):
+    browser_name = request.config.getoption("browser_name")
+    driver = None
+    if browser_name == "chrome":
+        options = get_chrome_options
+        driver = webdriver.Chrome(options=options)
     return driver
 
 

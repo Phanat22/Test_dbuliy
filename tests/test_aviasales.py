@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from pom.aviasales_page import AviasalesPage
-from pom.class_assertion import Assertion
+from pages.aviasales_page import AviasalesPage
+from pages.class_assertion import Assertion
 
 
 class TestAviasales:

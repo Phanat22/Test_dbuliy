@@ -1,6 +1,6 @@
 import pytest
 
-from pom.homepage_nav import HomepageNav
+from pages.homepage_nav import HomepageNav
 
 NAV_LINK_TEXT = 'Women,Men,Kids,Home,Beauty,Shoes,Handbags,Jewelry,Furniture,Toys,Gifts,Trending,Sale'
 
