@@ -30,7 +30,7 @@ def get_webdriver(request, get_chrome_options):
     return driver
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def setup(request, get_webdriver):
     driver = get_webdriver
     driver = EventFiringWebDriver(driver, MyListener())

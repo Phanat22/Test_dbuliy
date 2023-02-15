@@ -3,6 +3,7 @@ import time
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.remote.webelement import WebElement
 from typing import List
@@ -67,3 +68,18 @@ class SeleniumBase:
         '''Scroll down'''
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(2)
+
+    def select_item_by_index(self, find_by: str, locator: str, locator_name: str = None, index: int = None):
+        '''Select item by index from dropdown'''
+        select = Select(self.is_present(find_by, locator, locator_name))
+        select.select_by_index(index)
+
+    def select_item_by_value(self, find_by: str, locator: str, locator_name: str = None, value: int = None):
+        '''Select item by value from dropdown'''
+        select = Select(self.is_present(find_by, locator, locator_name))
+        select.select_by_value(value)
+
+    def select_item_by_text(self, find_by: str, locator: str, locator_name: str = None, text: str = None):
+        '''Select item by text from dropdown'''
+        select = Select(self.is_present(find_by, locator, locator_name))
+        select.select_by_visible_text(text)

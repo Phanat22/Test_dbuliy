@@ -8,7 +8,7 @@ NAV_LINK_TEXT = 'Women,Men,Kids,Home,Beauty,Shoes,Handbags,Jewelry,Furniture,Toy
 class TestHomepage:
 
     @pytest.fixture(autouse=True)
-    def get_url(self, setup):
+    def get_url(self):
         self.page = self.__class__.page = HomepageNav(self.driver)
         self.page.go_to_site()
 

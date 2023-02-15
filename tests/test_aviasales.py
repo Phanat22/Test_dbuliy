@@ -6,7 +6,7 @@ from pages.class_assertion import Assertion
 
 class TestAviasales:
 
-    def test_book_ticket(self, setup):
+    def test_book_ticket(self):
         page = AviasalesPage(self.driver)
         page.go_to_site()
 
