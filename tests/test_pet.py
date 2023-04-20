@@ -8,6 +8,7 @@ from pages.class_assertion import Assertion
 
 PET_URL = 'https://petstore.swagger.io/v2/pet'
 PET_FIND_BY_STATUS_URL = 'https://petstore.swagger.io/v2/pet/findByStatus'
+PATH_TO_LOCAL_FOLDER = os.path.join(os.path.dirname(__file__), "upload_files")
 
 PET_DATA = {
   "id": 0,
@@ -97,7 +98,6 @@ class TestPet:
     def test_pet_upload_image(self, file):
         create_pet_res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
         pet_id = create_pet_res.json()['id']
-        PATH_TO_LOCAL_FOLDER = os.path.join(os.path.dirname(__file__), "upload_files")
         files = [
             ('file', (file, open(f'{PATH_TO_LOCAL_FOLDER}/{file}', 'rb'), 'image/jpeg'))
         ]
@@ -111,7 +111,6 @@ class TestPet:
 
     @pytest.mark.parametrize('data, status', [(' ', 404), ('!@#$', 415), (0.1, 404), (None, 404)])
     def test_neg_pet_upload_image_wrong_id(self, data, status):
-        PATH_TO_LOCAL_FOLDER = os.path.join(os.path.dirname(__file__), "upload_files")
         files = [
             ('file', ('image.png', open(f'{PATH_TO_LOCAL_FOLDER}/image.png', 'rb'), 'image/jpeg'))
         ]
