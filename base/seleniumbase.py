@@ -1,6 +1,7 @@
 import time
 
 from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.select import Select
@@ -68,6 +69,9 @@ class SeleniumBase:
         '''Scroll down'''
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(2)
+
+    def scroll_into_view(self, element):
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     def select_item_by_index(self, find_by: str, locator: str, locator_name: str = None, index: int = None):
         '''Select item by index from dropdown'''
