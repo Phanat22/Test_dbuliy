@@ -1,4 +1,3 @@
-from datetime import datetime
 import os
 
 import pytest
@@ -48,13 +47,11 @@ def get_webdriver(request, get_chrome_options, get_firefox_options):
     return driver
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def setup(request, get_webdriver):
     driver = get_webdriver
     driver = EventFiringWebDriver(driver, MyListener())
     if request.cls is not None:
         request.cls.driver = driver
     yield driver
-    now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    driver.save_screenshot('screenshot-%s.png' % now)
     driver.quit()

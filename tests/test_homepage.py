@@ -5,6 +5,7 @@ from pages.homepage_nav import HomepageNav
 NAV_LINK_TEXT = 'Women,Men,Kids,Home,Beauty,Shoes,Handbags,Jewelry,Furniture,Toys,Gifts,Trending,Sale'
 
 
+@pytest.mark.usefixtures("setup")
 class TestHomepage:
 
     @pytest.fixture(autouse=True)

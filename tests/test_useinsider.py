@@ -1,3 +1,5 @@
+import pytest
+
 from pages.useinsider_page import UseinsiderPage
 
 MORE_DATA = "More"
@@ -8,6 +10,7 @@ NAV_BAR_ITEMS = 'Platform,Industries,Use Cases,Resources,Blog,More,Product Demo 
 JOBS_LEVER_LINK = 'https://jobs.lever.co/useinsider'
 
 
+@pytest.mark.usefixtures("setup")
 class TestUseinsider:
 
     def test_useinsider(self):

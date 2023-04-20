@@ -1,9 +1,11 @@
 from datetime import datetime
+import pytest
 
 from pages.aviasales_page import AviasalesPage
 from pages.class_assertion import Assertion
 
 
+@pytest.mark.usefixtures("setup")
 class TestAviasales:
 
     def test_book_ticket(self):
