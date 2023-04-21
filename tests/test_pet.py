@@ -182,20 +182,12 @@ class TestPet:
     def test_update_pet_with_form_data(self):
         res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
         pet_id = res.json()['id']
-        update_res = requests.post(
-            url=f'{PET_URL}/{pet_id}',
-            data={"name": "test"},
-            verify=False,
-        )
+        update_res = requests.post(url=f'{PET_URL}/{pet_id}', data={"name": "test"}, verify=False)
         check_header(update_res)
         assert update_res.status_code == 200, "Wrong status code"
         assert update_res.json()['message'] == str(pet_id), "Wrong ID"
 
     @pytest.mark.parametrize('data, status_code', [('', 415), ('1.0', 404), ('!@#$%^&', 404), (None, 404)])
     def test_neg_update_pet_with_form_data(self, data, status_code):
-        update_res = requests.post(
-            url=f'{PET_URL}/{data}',
-            data={"name": "test"},
-            verify=False,
-        )
+        update_res = requests.post(url=f'{PET_URL}/{data}', data={"name": "test"}, verify=False)
         assert update_res.status_code == status_code, "Wrong status code"
