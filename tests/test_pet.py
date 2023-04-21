@@ -33,7 +33,7 @@ PET_DATA_PENDING = PET_DATA.copy()
 PET_DATA_PENDING.update({"status": "pending"})
 
 PET_DATA_SOLD = PET_DATA.copy()
-PET_DATA_SOLD.update({"status": 1})
+PET_DATA_SOLD.update({"status": "sold"})
 
 
 CREATE_PET_SCHEMA = {
