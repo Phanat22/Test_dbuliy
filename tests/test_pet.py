@@ -57,13 +57,14 @@ CREATE_PET_SCHEMA = {
                  "type": "object",
                  "properties": {
                      "id": {'type': 'integer'},
-                     "name": {'type': "string"}},
+                     "name": {'type': "string"}
+                 },
                  "required": ['id', 'name']
              }
          },
          'status': {'type': "string"},
          },
-    "required": ["id", "category", "status", "photoUrls"]
+    "required": ["id", "category", "status", "tags", "photoUrls"]
 }
 
 
