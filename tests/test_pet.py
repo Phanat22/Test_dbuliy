@@ -87,17 +87,23 @@ class TestPet:
             .add(res.json().get('status') == PET_DATA['status'], "wrong status")\
             .do_assert()
 
-    def test_create_pet_by_id(self):
-        res = requests.post(url=PET_URL, json={'id': 0}, verify=False)
+    @pytest.mark.parametrize('data', [0, -1, '1', 1.1, ' '])
+    def test_create_pet_by_id(self, data):
+        res = requests.post(url=PET_URL, json={'id': data}, verify=False)
         assert res.status_code == 200, "Wrong status code"
         check_header(res)
 
         _assert = Assertion()
-        _assert.add(res.json().get('id') != PET_DATA['id'], "Wrong ID, ID is not changed")\
+        _assert.add(res.json().get('id') != data, "Wrong ID, ID is not changed")\
             .add(len(res.json().get('photoUrls')) == 0, "Wrong data of photoUrls")\
             .add(len(res.json().get('tags')) == 0, "Wrong data of tags")\
             .add(len(res.json()) == 3, "wrong count of items")\
             .do_assert()
+
+    @pytest.mark.parametrize('data', ['A', 'a', '!@#$'])
+    def test_neg_create_pet_by_id(self, data):
+        res = requests.post(url=PET_URL, json={'id': data}, verify=False)
+        assert res.status_code == 500, "Wrong status code"  # maybe we should get another status code and it is a bug
 
     @pytest.mark.parametrize('data', [1, '1', ' ', '!@#$', 0.1, None])
     def test_neg_create_pet(self, data):
@@ -105,7 +111,7 @@ class TestPet:
         if data is None:
             assert res.status_code == 415, "Wrong status code"
         else:
-            assert res.status_code == 500, "Wrong status code"
+            assert res.status_code == 500, "Wrong status code" # maybe we should get another status code and it is a bug
 
     @pytest.mark.parametrize('file', ['image.png', 'Test.txt'])
     def test_pet_upload_image(self, file):
