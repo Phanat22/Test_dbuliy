@@ -42,9 +42,9 @@ CREATE_PET_SCHEMA = {
         {'id': {"type": "integer"},
          'category': {"type": "object",
                       "properties":
-                      {'id': {"type": "integer"},
-                       'name': {"type": "string"},
-                       },
+                          {'id': {"type": "integer"},
+                           'name': {"type": "string"},
+                           },
                       "required": ['id', 'name']},
          'name': {"type": "string"},
          'photoUrls': {
