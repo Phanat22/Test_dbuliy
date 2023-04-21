@@ -87,6 +87,18 @@ class TestPet:
             .add(res.json().get('status') == PET_DATA['status'], "wrong status")\
             .do_assert()
 
+    def test_create_pet_by_id(self):
+        res = requests.post(url=PET_URL, json={'id': 0}, verify=False)
+        assert res.status_code == 200, "Wrong status code"
+        check_header(res)
+
+        _assert = Assertion()
+        _assert.add(res.json().get('id') != PET_DATA['id'], "Wrong ID, ID is not changed")\
+            .add(len(res.json().get('photoUrls')) == 0, "Wrong data of photoUrls")\
+            .add(len(res.json().get('tags')) == 0, "Wrong data of tags")\
+            .add(len(res.json()) == 3, "wrong count of items")\
+            .do_assert()
+
     @pytest.mark.parametrize('data', [1, '1', ' ', '!@#$', 0.1, None])
     def test_neg_create_pet(self, data):
         res = requests.post(url=PET_URL, json=data, verify=False)
