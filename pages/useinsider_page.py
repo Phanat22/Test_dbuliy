@@ -59,13 +59,13 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         time.sleep(2)
 
     def check_locations_block_is_present(self):
-        return self.is_present('css', self.location_block, "team block is not present")
+        return self.is_present('css', self.location_block, "location block is not present")
 
     def check_life_at_insider_block_is_present(self):
-        return self.is_present('css', self.life_at_insider_block, "team block is not present")
+        return self.is_present('css', self.life_at_insider_block, "life_at_insider_block block is not present")
 
     def select_team_item(self, name):
-        team_block = self.is_present('css', self.team_block, "team block is not present")
+        team_block = self.check_team_block_is_present()
         teams_items = team_block.find_elements(By.CSS_SELECTOR, self.team_block_items)
         exp_item = list()
         for i in teams_items:
@@ -76,7 +76,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         self.driver.get(item_href.get_attribute('href'))
 
     def see_all_jobs_btn_click(self):
-        job_btn = self.is_present('css', self.see_all_jobs_button, "See all jibs btn is not present")
+        job_btn = self.is_present('css', self.see_all_jobs_button, "See all jobs btn is not present")
         get_href = job_btn.find_element(By.CSS_SELECTOR, 'a')
         self.driver.get(get_href.get_attribute('href'))
         time.sleep(2)
@@ -85,7 +85,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         time.sleep(2)
         location_dd = self.is_present('css', self.location_dropdown, "Location dropdown is not present")
         location_dd.click()
-        self.is_present('css', self.location_dd_results, "Location dropdown dos not expand")
+        self.is_present('css', self.location_dd_results, "Location dropdown not expanding")
         results_items = self.are_present('css', self.location_dd_items, "Items are not present")
         items_text = self.get_text_from_webelements(results_items)
         location_index = items_text.index(location)
@@ -93,9 +93,9 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         assert location_dd.get_attribute('title') == location, "Wrong selected location"
 
     def select_item_from_department_ddwn(self, location):
-        department_dd = self.is_present('css', self.department_dropdown, "Location dropdown is not present")
+        department_dd = self.is_present('css', self.department_dropdown, "Department dropdown is not present")
         department_dd.click()
-        self.is_present('css', self.department_dd_results, "Location dropdown dos not expand")
+        self.is_present('css', self.department_dd_results, "Department dropdown not expanding")
         results_items = self.are_present('css', self.department_dd_items, "Items are not present")
         items_text = self.get_text_from_webelements(results_items)
         department_index = items_text.index(location)
@@ -106,7 +106,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         job_list_block = self.is_present('css', self.jod_list_block, "Job list is not present")
         self.scroll_into_view(job_list_block)
         time.sleep(2)
-        job_positions = self.are_present('css', self.jod_items, "Job items is missing")
+        job_positions = self.are_present('css', self.jod_items, "Job items are missing")
         _assert = Assertion()
         for pos in job_positions:
             pos_name = pos.find_element(By.CSS_SELECTOR, self.job_position_name)
@@ -121,7 +121,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
                 .do_assert()
 
     def apply_position_and_check_switch(self, url, pos_name):
-        job_positions = self.are_present('css', self.jod_items, "Job items is missing")
+        job_positions = self.are_present('css', self.jod_items, "Job items are missing")
         job_apply_bnt = job_positions[0].find_element(By.CSS_SELECTOR, self.job_apply_bnt)
         self.driver.get(job_apply_bnt.get_attribute('href'))
         time.sleep(2)
