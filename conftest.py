@@ -1,6 +1,7 @@
 import os
-
 import pytest
+from datetime import datetime
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as chrome_options
 from selenium.webdriver.firefox.options import Options as firefox_options
@@ -54,4 +55,7 @@ def setup(request, get_webdriver):
     if request.cls is not None:
         request.cls.driver = driver
     yield driver
+    if request.session.testsfailed:
+        now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        driver.get_screenshot_as_file('screenshot_failed_test-%s.png' % now)
     driver.quit()
