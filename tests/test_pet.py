@@ -75,7 +75,7 @@ def check_header(res):
         assert False, "Content-Type is missing"
 
 
-class TestPet:
+class TestPetAPI:
 
     @pytest.mark.parametrize('method', ['POST', 'PUT'])
     def test_create_pet(self, method):
