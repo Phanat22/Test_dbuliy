@@ -96,7 +96,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         items_text = self.get_text_from_webelements(results_items)
         department_index = items_text.index(location)
         results_items[department_index].click()
-        assert department_dd.get_attribute('title') == location, "Wrong selected location"
+        assert department_dd.get_attribute('title') == location, "Wrong selected department"
 
     def check_selected_position(self, position, department, location, btn_link):
         job_list_block = self.is_present('css', self.jod_list_block, "Job list is not present")
