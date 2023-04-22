@@ -77,8 +77,12 @@ def check_header(res):
 
 class TestPet:
 
-    def test_create_pet(self):
-        res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
+    @pytest.mark.parametrize('method', ['POST', 'PUT'])
+    def test_create_pet(self, method):
+        if method == 'POST':
+            res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
+        else:
+            res = requests.put(url=PET_URL, json=PET_DATA, verify=False)
         assert res.status_code == 200, "Wrong status code"
         check_header(res)
         validate(instance=res.json(), schema=CREATE_PET_SCHEMA)
@@ -142,23 +146,13 @@ class TestPet:
         res = requests.post(url=f'{PET_URL}/{pet_id}/uploadImage', verify=False)
         assert res.status_code == 415, "Wrong status code"
 
-    def test_put_pet(self):
-        res = requests.put(url=PET_URL, json=PET_DATA, verify=False)
-        assert res.status_code == 200, "Wrong status code"
-        check_header(res)
-        validate(instance=res.json(), schema=CREATE_PET_SCHEMA)
-        _assert = Assertion()
-        _assert.add(res.json().get('id') != PET_DATA['id'], "Wrong ID, ID is not changed")\
-            .add(res.json().get('status') == PET_DATA['status'], "wrong status")\
-            .do_assert()
-
     @pytest.mark.parametrize('status, schema', [
         ('available', PET_DATA),
         ('pending', PET_DATA_PENDING),
         ('sold', PET_DATA_SOLD),
     ])
     def test_get_pet(self, status, schema):
-        requests.put(url=PET_URL, json=schema, verify=False)
+        requests.post(url=PET_URL, json=schema, verify=False)
         res = requests.get(url=PET_FIND_BY_STATUS_URL, params={'status': status}, verify=False)
         assert res.status_code == 200, "Wrong status code"
         check_header(res)
@@ -170,7 +164,7 @@ class TestPet:
             .do_assert()
 
     def test_find_pet_by_id(self):
-        res = requests.put(url=PET_URL, json=PET_DATA, verify=False)
+        res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
         pet_id = res.json()['id']
         get_res = requests.get(url=f'{PET_URL}/{pet_id}', verify=False)
         check_header(res)
@@ -184,7 +178,7 @@ class TestPet:
         assert get_res.status_code == status_code, "Wrong status code"
 
     def test_delete_pet(self):
-        res = requests.put(url=PET_URL, json=PET_DATA, verify=False)
+        res = requests.post(url=PET_URL, json=PET_DATA, verify=False)
         pet_id = res.json()['id']
         delete_res = requests.delete(url=f'{PET_URL}/{pet_id}', json=PET_DATA, verify=False)
         assert delete_res.status_code == 200, "Wrong status code"
