@@ -62,7 +62,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         return self.is_present('css', self.location_block, "location block is not present")
 
     def check_life_at_insider_block_is_present(self):
-        return self.is_present('css', self.life_at_insider_block, "life_at_insider_block block is not present")
+        return self.is_present('css', self.life_at_insider_block, "life at insider block is not present")
 
     def select_team_item(self, name):
         team_block = self.check_team_block_is_present()
