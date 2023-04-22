@@ -1,10 +1,13 @@
 import time
 
+import pytest
 from selenium.webdriver.common.by import By
 from base.seleniumbase import SeleniumBase
 
 from pages.locators.useinsider_locators import UseinsiderPageLocators
 from pages.class_assertion import Assertion
+
+NAV_BAR_ITEMS = 'Platform,Industries,Use Cases,Resources,Blog,More,Product Demo Hub,'
 
 
 class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
@@ -24,14 +27,15 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         self.is_visible('css', self.navigation_bar_block, "Navigation block is not visible")
         return self.are_present('css', self.nav_bar_items, 'Header Navigation items are not visible')
 
-    def get_nav_bar_items_text(self) -> str:
-        nav_links = self.get_nav_bar_items()
-        nav_links_text = self.get_text_from_webelements(nav_links)
-        return ','.join(nav_links_text)
-
     def select_nav_bar_item(self, name):
         nav_links = self.get_nav_bar_items()
         nav_links_text = self.get_text_from_webelements(nav_links)
+        titles = ','.join(nav_links_text)
+        _assert = Assertion()
+        _assert\
+            .add(titles == NAV_BAR_ITEMS, "Wrong items of navigation bar menu")\
+            .add(name in nav_links_text, f"{name} is missing in {nav_links_text}")\
+            .do_assert()
         name_index = nav_links_text.index(name)
         nav_links[name_index].click()
 

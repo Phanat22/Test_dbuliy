@@ -6,7 +6,6 @@ MORE_DATA = "More"
 CAREERS_DATA = "Careers"
 POSITION_DATA = "Quality Assurance"
 CITY_DATA = "Istanbul, Turkey"
-NAV_BAR_ITEMS = 'Platform,Industries,Use Cases,Resources,Blog,More,Product Demo Hub,'
 JOBS_LEVER_LINK = 'https://jobs.lever.co/useinsider'
 
 
@@ -18,7 +17,6 @@ class TestUseinsider:
         page.go_to_site()
         page.select_accept_all_cookies()
         page.get_nav_bar_items()
-        assert page.get_nav_bar_items_text() == NAV_BAR_ITEMS, "Wrong items of navigation bar menu"
         page.select_nav_bar_item(MORE_DATA)
         page.select_more_block(CAREERS_DATA)
         page.check_team_block_is_present()
