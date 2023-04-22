@@ -46,7 +46,7 @@ class UseinsiderPage(SeleniumBase, UseinsiderPageLocators):
         team_block = self.is_present('css', self.team_block, "team block is not present")
         return team_block
 
-    def scroll_and_see_all_teams(self):
+    def scroll_and_click_see_all_teams(self):
         team_block = self.check_team_block_is_present()
         teams_btn = team_block.find_element(By.CSS_SELECTOR, self.see_all_teams_btn)
         team_items_block = team_block.find_elements(By.CSS_SELECTOR, self.team_block_items_block)[0]

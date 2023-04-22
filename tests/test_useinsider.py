@@ -22,7 +22,7 @@ class TestUseinsider:
         page.check_team_block_is_present()
         page.check_locations_block_is_present()
         page.check_life_at_insider_block_is_present()
-        page.scroll_and_see_all_teams()
+        page.scroll_and_click_see_all_teams()
         page.select_team_item(POSITION_DATA)
         page.see_all_jobs_btn_click()
         page.select_item_from_location_ddwn(CITY_DATA)
